@@ -1,0 +1,56 @@
+## set up project ##
+- create directory
+- get into created dir
+- activate venv (python -m venv .venv)
+- install django
+- create requirements.txt ( pip freeze > requirements.txt)
+- start project (django-admin startproject blog)
+
+## put it on github with decouple way ##
+- install django-decouple (pip install python-decouple)
+- create .env file
+- from decouple import config (put in settings.py)
+- use config to cast value (in settings.py)
+	Ex. >> SECRET_KEY = config('SECRET_KEY')
+- in .env file
+	Ex. >> SECRET_KEY=123#$%^&*() # No Space before/after equal sign
+
+## Setup database postgresql
+- install postgresql
+- choose server and create database (database_name = blog) !! pgAdmin
+- back to project intall psycopg2 (pip install psycopg2)
+- [settings.py]
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.postgresql_psycopg2',
+			'NAME': config('NAME'), 
+			'USER': config('USER'), 
+			'PASSWORD': config('PASSWORD'),
+			'HOST': config('HOST'), 
+			'PORT': config('PORT'),
+		}
+	}
+- [.env]
+	NAME=blog
+	USER=postgres 
+	PASSWORD=1234
+	HOST=127.0.0.1
+	PORT=5432
+
+## Check connection between app and database
+- create app and add model (app name = post)
+	>> python manage.py startapp post
+- add app to settings.py in INSTALLED_APP
+- create Model
+- make migrations
+	python manage.py makemigrations
+- migrate
+	python manage.py migrate
+
+## try admin website
+- create user (python manage.py createsuperuser)
+- runserver
+- [web]/admin 
+
+## create .gitignore
+- copy pattern from [ https://gist.github.com/santoshpurbey/6f982faf1eacdac153ffd86a3a694239 ]
